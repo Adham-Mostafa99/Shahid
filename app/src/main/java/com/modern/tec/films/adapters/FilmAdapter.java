@@ -74,7 +74,7 @@ public class FilmAdapter extends ListAdapter<Film, FilmAdapter.ViewHolder> {
                 .into(holder.filmPhoto);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public  class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView filmPhoto;
         private TextView filmTitle;
         private TextView filmOverview;

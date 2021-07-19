@@ -10,21 +10,22 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.modern.tec.films.data.Network;
 import com.modern.tec.films.models.Film;
 import com.modern.tec.films.repository.FilmRepository;
 
 import java.util.List;
 
-public class MainActivityViewModel extends AndroidViewModel {
+public class FilmsViewModel extends AndroidViewModel {
     FilmRepository filmRepository;
     LiveData<List<Film>> allFilms;
 
-    public MainActivityViewModel(@NonNull @org.jetbrains.annotations.NotNull Application application) {
+    public FilmsViewModel(@NonNull @org.jetbrains.annotations.NotNull Application application) {
         super(application);
         filmRepository = new FilmRepository(application);
         allFilms = filmRepository.getAllFilms();
 
-        if (isNetworkAvailable(application)) {
+        if (Network.isNetworkAvailable(application)) {
             filmRepository.getFilmsFromServer();
         }
 
@@ -34,13 +35,6 @@ public class MainActivityViewModel extends AndroidViewModel {
         return allFilms;
     }
 
-
-    private boolean isNetworkAvailable(Context context) {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
 
     public void insert(Film film) {
         filmRepository.insert(film);
