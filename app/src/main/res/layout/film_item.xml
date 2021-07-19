@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:layout_margin="8dp"
+    android:background="@color/white"
+    android:padding="12dp">
+
+
+    <ImageView
+        android:id="@+id/film_item_photo"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@color/cardview_dark_background" />
+
+    <TextView
+        android:id="@+id/film_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_toEndOf="@id/film_item_photo"
+        android:layout_toRightOf="@id/film_item_photo"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Film Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:id="@+id/film_item_over_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/film_item_title"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/film_item_photo"
+        android:layout_toRightOf="@id/film_item_photo"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="over view \nover view \nover view \nover view "
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+    <TextView
+        android:id="@+id/film_item_release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/film_item_over_view"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/film_item_photo"
+        android:layout_toRightOf="@id/film_item_photo"
+        android:ellipsize="end"
+        android:maxLines="5"
+        android:textColor="@color/black"
+        android:text="20/15/11"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+
+    <TextView
+        android:id="@+id/film_item_vote_average"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/film_item_release_date"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/film_item_photo"
+        android:layout_toRightOf="@id/film_item_photo"
+        android:ellipsize="end"
+        android:textColor="@color/black"
+        android:maxLines="5"
+        android:text="7.7/10"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+
+    <TextView
+        android:id="@+id/film_item_vote_count_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/film_item_release_date"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/film_item_vote_average"
+        android:layout_toRightOf="@id/film_item_vote_average"
+        android:ellipsize="end"
+        android:maxLines="5"
+        android:textColor="@color/black"
+        android:text="Votes:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+
+
+
+    <TextView
+        android:id="@+id/film_item_vote_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/film_item_release_date"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/film_item_vote_count_text"
+        android:layout_toRightOf="@id/film_item_vote_count_text"
+        android:ellipsize="end"
+        android:maxLines="5"
+        android:textColor="@color/black"
+        android:text="1145"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+
+</RelativeLayout>

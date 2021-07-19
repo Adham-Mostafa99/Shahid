@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Films App</string>
+    <string name="photo_base_url">https://www.themoviedb.org/t/p/w600_and_h900_bestv2</string>
+</resources>
