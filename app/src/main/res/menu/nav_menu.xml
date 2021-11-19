@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_bottom_home"
+        android:icon="@drawable/home"
+        android:title="Home"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/nav_bottom_rank"
+        android:icon="@drawable/crown"
+        android:title="Ranking"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/nav_bottom_compass"
+        android:icon="@drawable/compass"
+        android:title="Search"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/nav_bottom_fav"
+        android:icon="@drawable/like"
+        android:title="Favorite"
+        app:showAsAction="always" />
+
+</menu>

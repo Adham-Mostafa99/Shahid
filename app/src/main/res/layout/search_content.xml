@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/primary_color"
+    android:clipToPadding="false"
+    android:paddingBottom="60dp">
+
+    <LinearLayout
+        android:id="@+id/linear_1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_layout_high"
+        android:layout_marginHorizontal="15dp"
+        android:background="@drawable/search_layout_background"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
+        android:paddingHorizontal="16dp">
+
+        <EditText
+            android:id="@+id/film_date_edittext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="Search movie here"
+            android:inputType="text"
+            android:textColor="@color/mid_white"
+            android:textColorHint="@color/mid_white"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/search_icon" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/search_recycler"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linear_1"
+        tools:listitem="@layout/item_film"/>
+</RelativeLayout>

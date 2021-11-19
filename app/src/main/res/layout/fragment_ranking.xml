@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/all_content_not_filter"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/ranking_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
+            android:background="@color/primary_color">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_high"
+                android:minHeight="?attr/actionBarSize">
+
+                <Button
+                    android:id="@+id/ranking_back_button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:background="@drawable/back_button" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="center_vertical"
+                    android:text="@string/ranking_screen_name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/main_header_text_size" />
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <include
+            android:id="@+id/ranking_content"
+            layout="@layout/ranking_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="12dp"
+            android:layout_height="match_parent"
+            android:layout_below="@id/ranking_app_bar"
+            android:layout_centerHorizontal="true" />
+
+
+        <ImageView
+            android:id="@+id/filter_back_layout"
+            android:layout_width="match_parent"
+            android:layout_below="@id/ranking_app_bar"
+            android:layout_height="match_parent"
+            android:background="@color/mid_white"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+
+
+
+    <include
+        android:id="@+id/ranking_filter_content"
+        layout="@layout/ranking_filter_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

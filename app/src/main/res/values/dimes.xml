@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="header_text_size">20sp</dimen>
+    <dimen name="main_header_text_size">24sp</dimen>
+    <dimen name="search_layout_high">45dp</dimen>
+    <dimen name="toolbar_high">50dp</dimen>
+
+
+</resources>

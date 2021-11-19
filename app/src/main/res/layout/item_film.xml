@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="5dp"
+    app:cardBackgroundColor="@color/transparent_color"
+    app:cardElevation="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/search_card_background">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/item_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/test"
+            app:riv_corner_radius="20dip" />
+
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_toStartOf="@id/item_rate_layout"
+            android:layout_toEndOf="@id/item_image"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto"
+            android:maxLines="1"
+            android:text="Tenet"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/item_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_name"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_toStartOf="@id/item_rate_layout"
+            android:layout_toEndOf="@id/item_image"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto"
+            android:maxLines="2"
+            android:text="John David Washington | Robert Pattinson"
+            android:textColor="@color/mid_white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/item_search_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_desc"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_toStartOf="@id/item_rate_layout"
+            android:layout_toEndOf="@id/item_image"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto"
+            android:maxLines="1"
+            android:text="Action | Sci-Fi"
+            android:textColor="@color/mid_white"
+            android:textSize="14sp" />
+
+        <com.github.rongi.rotate_layout.layout.RotateLayout
+            android:id="@+id/item_rate_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            app:angle="90">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:background="@drawable/film_rate_background"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="7.4 IMDb"
+                android:id="@+id/item_vote"
+                android:textColor="@color/white"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+        </com.github.rongi.rotate_layout.layout.RotateLayout>
+
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

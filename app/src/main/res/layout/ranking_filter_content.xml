@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="60dp"
+    android:id="@+id/content"
+    android:visibility="gone"
+    android:background="@drawable/filter_layout_background">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/roboto"
+        android:text="Filters"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/filter_layout_close_btn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/close_button" />
+
+
+    <RadioGroup
+        android:id="@+id/filter_layout_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/filter_layout_close_btn"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/filter_layout_top_rated_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:theme="@style/radio_button_style" />
+
+        <RadioButton
+            android:id="@+id/filter_layout_most_watched_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:theme="@style/radio_button_style" />
+
+        <RadioButton
+            android:id="@+id/filter_layout_this_year_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:theme="@style/radio_button_style" />
+
+        <RadioButton
+            android:id="@+id/filter_layout_all_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:theme="@style/radio_button_style" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/filter_layout_top_rated_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/filter_layout_close_btn"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="22dp"
+        android:fontFamily="@font/roboto"
+        android:text="Top rated"
+        android:textColor="@color/mid_white"
+        android:textSize="16sp" />
+
+
+    <ImageView
+        android:id="@+id/line_1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/filter_layout_top_rated_txt"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/line_color" />
+
+    <TextView
+        android:id="@+id/filter_layout_most_watched_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_1"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="22dp"
+        android:fontFamily="@font/roboto"
+        android:text="Most watched"
+        android:textColor="@color/mid_white"
+        android:textSize="16sp" />
+
+
+    <ImageView
+        android:id="@+id/line_2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/filter_layout_most_watched_txt"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/line_color" />
+
+    <TextView
+        android:id="@+id/filter_layout_this_year_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_2"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="22dp"
+        android:fontFamily="@font/roboto"
+        android:text="This year"
+        android:textColor="@color/mid_white"
+        android:textSize="16sp" />
+
+
+    <ImageView
+        android:id="@+id/line_3"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/filter_layout_this_year_txt"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/line_color" />
+
+    <TextView
+        android:id="@+id/filter_layout_all_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_3"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="22dp"
+        android:fontFamily="@font/roboto"
+        android:text="All"
+        android:textColor="@color/mid_white"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/filter_layout_apply_btn"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/filter_layout_all_txt"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/filter_apply_btn_background"
+        android:fontFamily="@font/roboto"
+        android:text="Apply"
+        android:textAllCaps="false"
+        android:textColor="@color/mid_white"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="22sp" />
+</RelativeLayout>

@@ -1,4 +1,16 @@
 <resources>
-    <string name="app_name">Films App</string>
+    <string name="app_name">Shahid</string>
+    <string name="ranking_screen_name">Ranking</string>
+    <string name="search_screen_name">Search</string>
     <string name="photo_base_url">https://www.themoviedb.org/t/p/w600_and_h900_bestv2</string>
+    <string name="horror_category">Horror</string>
+    <string name="comedy_category">Comedy</string>
+    <string name="war_category">War</string>
+    <string name="action_category">Action</string>
+    <string name="drama_category">Drama</string>
+    <string name="romance_category">Romance</string>
+    <string name="sci_fi_category">Sci-Fi</string>
+    <string name="animation_category">Animation</string>
+    <string name="most_watched_sort">popularity.des</string>
+    <string name="top_rated_sort">vote_count.des</string>
 </resources>
