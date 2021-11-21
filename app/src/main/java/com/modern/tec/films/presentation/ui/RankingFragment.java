@@ -1,9 +1,9 @@
-package com.modern.tec.films.presintation.ui;
+package com.modern.tec.films.presentation.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,8 +25,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.modern.tec.films.R;
 import com.modern.tec.films.core.models.Film;
 import com.modern.tec.films.databinding.FragmentRankingBinding;
-import com.modern.tec.films.presintation.adapters.RankingFilmAdapter;
-import com.modern.tec.films.presintation.viewmodel.FilmsViewModel;
+import com.modern.tec.films.presentation.adapters.RankingFilmAdapter;
+import com.modern.tec.films.presentation.viewmodel.FilmsViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -300,7 +300,7 @@ public class RankingFragment extends Fragment {
 
     private RankingFilmAdapter.OnItemClick onRankingClick() {
         return film -> {
-//TODO on click
+            startActivity(new Intent(getActivity(), DetailsActivity.class).putExtra(DetailsActivity.FILM_DETAILS_INTENT, film));
         };
     }
 

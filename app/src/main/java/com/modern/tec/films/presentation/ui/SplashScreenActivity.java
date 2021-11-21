@@ -1,4 +1,4 @@
-package com.modern.tec.films.presintation.ui;
+package com.modern.tec.films.presentation.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
@@ -7,12 +7,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.modern.tec.films.core.models.Genre;
 import com.modern.tec.films.databinding.ActivitySplashScreenBinding;
-import com.modern.tec.films.presintation.viewmodel.GenreViewModel;
+import com.modern.tec.films.presentation.viewmodel.GenreViewModel;
 
 import java.util.HashMap;
 import java.util.List;

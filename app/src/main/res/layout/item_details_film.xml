@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginHorizontal="10dp">
+
+    <ImageView
+        android:layout_width="88dp"
+        android:layout_height="32dp"
+        android:src="@drawable/details_item_background" />
+
+    <TextView
+        android:id="@+id/item_details_film_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="4dp"
+        android:fontFamily="@font/roboto"
+        android:lines="1"
+        android:maxEms="5"
+        android:text="Adventure"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+</RelativeLayout>

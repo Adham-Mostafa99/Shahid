@@ -1,4 +1,4 @@
-package com.modern.tec.films.presintation.viewmodel;
+package com.modern.tec.films.presentation.viewmodel;
 
 import android.app.Application;
 

@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Shahid</string>
     <string name="ranking_screen_name">Ranking</string>
+    <string name="popular_screen_name">Popular</string>
     <string name="search_screen_name">Search</string>
+    <string name="details_screen_name">Details</string>
     <string name="photo_base_url">https://www.themoviedb.org/t/p/w600_and_h900_bestv2</string>
     <string name="horror_category">Horror</string>
     <string name="comedy_category">Comedy</string>

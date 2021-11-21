@@ -1,4 +1,4 @@
-package com.modern.tec.films.presintation.ui;
+package com.modern.tec.films.presentation.ui;
 
 import android.app.Activity;
 import android.content.Context;

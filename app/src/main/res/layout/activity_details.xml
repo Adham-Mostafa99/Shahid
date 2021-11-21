@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color"
+    tools:context=".presentation.ui.DetailsActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="32dp">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/details_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
+            android:background="@color/primary_color">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_high"
+                android:minHeight="?attr/actionBarSize">
+
+                <Button
+                    android:id="@+id/details_back_button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/back_button"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="center_vertical"
+                    android:text="@string/details_screen_name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/main_header_text_size" />
+
+                <ImageView
+                    android:id="@+id/details_fav"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center|end"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/favourite_button" />
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/details_film_image"
+            android:layout_width="match_parent"
+            android:layout_height="275dp"
+            android:layout_below="@id/details_app_bar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="32dp"
+            android:scaleType="centerInside"
+            android:scaleX="2"
+            android:src="@drawable/test"
+            app:riv_corner_radius="10dip" />
+
+        <TextView
+            android:id="@+id/details_film_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/details_film_image"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/roboto"
+            android:lines="1"
+            android:text="Enola Holmes"
+            android:textAlignment="center"
+            android:textColor="@color/details_text_color"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/relative_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/details_film_name"
+            android:layout_marginTop="16dp"
+            android:gravity="center">
+
+            <com.chaek.android.RatingBar
+                android:id="@+id/details_film_rank_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="8dp"
+                android:layout_toStartOf="@id/v_line"
+                app:rating_star_color="#F6FE14"
+                app:rating_star_empty_color="#FFFFFF"
+                app:rating_star_height="15dp"
+                app:rating_star_width="15dp"
+                app:rating_start_count="5" />
+
+            <ImageView
+                android:id="@+id/v_line"
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toStartOf="@id/details_film_rank_digit"
+                android:background="@color/mid_white" />
+
+            <TextView
+                android:id="@+id/details_film_rank_digit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto"
+                android:maxEms="3"
+                android:maxLines="1"
+                android:text="4.9"
+                android:textColor="@color/details_text_color"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/details_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relative_1"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="16dp"
+            android:scrollbars="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="4"
+            tools:listitem="@layout/item_details_film" />
+
+        <TextView
+            android:id="@+id/details_film_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/details_recycler"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="12dp"
+            android:lines="6"
+            android:scrollbars="vertical"
+            android:text="When Enola Holmes-Sherlock's teen sister-discovers her mother missing, she sets off to find her, becoming a super-sleuth in her own right as she outwits her famous brother and unravels a dangerous conspiracy around a mysterious young Lord."
+            android:textColor="@color/details_text_color"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/horizontal_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/details_film_overview"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/h_line_color" />
+
+        <TextView
+            android:id="@+id/text_stars"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/horizontal_line"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/roboto"
+            android:text="Stars"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/details_stars_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_stars"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_stars" />
+    </RelativeLayout>
+
+
+</ScrollView>

@@ -1,4 +1,4 @@
-package com.modern.tec.films.presintation.adapters;
+package com.modern.tec.films.presentation.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.modern.tec.films.R;
 import com.modern.tec.films.core.models.Film;
-import com.modern.tec.films.databinding.ItemPopularFilmBinding;
 import com.modern.tec.films.databinding.ItemRankingFilmBinding;
 
 import org.jetbrains.annotations.NotNull;

@@ -1,5 +1,6 @@
 package com.modern.tec.films.data.network.interfaces;
 
+import com.modern.tec.films.core.models.ActorsRespond;
 import com.modern.tec.films.core.models.FilmsRespond;
 import com.modern.tec.films.core.models.GenreRespond;
 
@@ -19,10 +20,11 @@ public interface FilmApi {
     Call<FilmsRespond> searchFilm(
             @Query("api_key") String key,
             @Query("query") String filmName,
-            @Query("page")int pageNumber);
+            @Query("page") int pageNumber);
 
     @GET("movie/popular")
-    Call<FilmsRespond> getPopularFilms(@Query("api_key") String key);
+    Call<FilmsRespond> getPopularFilms(@Query("api_key") String key,
+                                       @Query("page") int pageNumber);
 
     @GET("movie/upcoming")
     Call<FilmsRespond> getComingFilms(@Query("api_key") String key);
@@ -35,6 +37,14 @@ public interface FilmApi {
             @Query("year") String year,
             @Query("page") int pageNumber);
 
+
+    @GET("movie/{movie_id}/credits")
+    Call<ActorsRespond> getFilmActors(@Path("movie_id") int movieId,
+                                      @Query("api_key") String key);
+
+    @GET("movie/{movie_id}/recommendations")
+    Call<FilmsRespond> getSuggestedFilms(@Path("movie_id") String filmId,
+                                         @Query("api_key") String key);
 
 }
 

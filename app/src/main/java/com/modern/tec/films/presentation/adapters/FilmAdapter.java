@@ -1,12 +1,9 @@
-package com.modern.tec.films.presintation.adapters;
+package com.modern.tec.films.presentation.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -97,7 +94,6 @@ public class FilmAdapter extends ListAdapter<Film, FilmAdapter.ViewHolder> {
 
         String vote = String.format("%.1f IMDb", currentFilm.getFilmVote() / 2);//vote in 1-digit
         holder.binding.itemVote.setText(vote);
-        Log.v("TAG", "Vote: " + vote);
 
 
         if (currentFilm.getFilmsGenreNames().size() > 0) {

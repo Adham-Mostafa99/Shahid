@@ -3,6 +3,7 @@ package com.modern.tec.films.data.repository.interfaces;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 
+import com.modern.tec.films.core.models.Actor;
 import com.modern.tec.films.core.models.Film;
 import com.modern.tec.films.core.models.Genre;
 
@@ -13,14 +14,20 @@ public interface IFilmRepo {
     String BASE_URL = "https://api.themoviedb.org/3/";
 
 
-    LiveData<List<Film>> getPopularFilms();
+    LiveData<List<Film>> getPopularFilms(int pageNumber);
 
     LiveData<List<Film>> getComingFilms();
 
 
     void getDiscoveredFilms(String sortType, String year, int pageNumber);
 
+    LiveData<List<Film>> getCategoryFilms(String categoryName, String sortType, String year, int pageNumber);
+
     void searchFilms(String name, int page);
 
+
+    LiveData<List<Actor>> getFilmActors(int filmId);
+
+    LiveData<List<Film>> getSuggestedFilms(String filmId);
 
 }

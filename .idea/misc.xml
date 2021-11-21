@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/FilmsApp/app/src/main/res/drawable/details_item_background.xml" value="0.2911458333333333" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/activity_details.xml" value="0.275" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/activity_movies.xml" value="0.1783783783783784" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/activity_popular.xml" value="0.275" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/fragment_home.xml" value="0.275" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/fragment_ranking.xml" value="0.275" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/fragment_search.xml" value="0.275" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/item_details_film.xml" value="0.275" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/item_film.xml" value="0.1783783783783784" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/item_ranking_film.xml" value="0.275" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/item_stars.xml" value="0.275" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/item_suggested.xml" value="0.1783783783783784" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/ranking_content.xml" value="0.275" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/ranking_filter_content.xml" value="0.275" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/search_content.xml" value="0.275" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

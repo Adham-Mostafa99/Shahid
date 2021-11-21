@@ -1,7 +1,8 @@
-package com.modern.tec.films.presintation.ui;
+package com.modern.tec.films.presentation.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.modern.tec.films.core.models.Category;
 import com.modern.tec.films.core.models.Film;
 import com.modern.tec.films.databinding.FragmentHomeBinding;
-import com.modern.tec.films.presintation.adapters.CategoryAdapter;
-import com.modern.tec.films.presintation.adapters.ComeSoonFilmsAdapter;
-import com.modern.tec.films.presintation.adapters.PopularAdapter;
-import com.modern.tec.films.presintation.viewmodel.CategoryViewModel;
-import com.modern.tec.films.presintation.viewmodel.FilmsViewModel;
+import com.modern.tec.films.presentation.adapters.CategoryAdapter;
+import com.modern.tec.films.presentation.adapters.ComeSoonFilmsAdapter;
+import com.modern.tec.films.presentation.adapters.PopularAdapter;
+import com.modern.tec.films.presentation.viewmodel.CategoryViewModel;
+import com.modern.tec.films.presentation.viewmodel.FilmsViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -83,7 +84,7 @@ public class HomeFragment extends Fragment {
 
 
     private void getPopularFilms() {
-        filmsViewModel.getPopularFilms().observe(getViewLifecycleOwner(), new Observer<List<Film>>() {
+        filmsViewModel.getPopularFilms(1).observe(getViewLifecycleOwner(), new Observer<List<Film>>() {
             @Override
             public void onChanged(List<Film> films) {
                 popularAdapter.submitList(films);
@@ -153,19 +154,19 @@ public class HomeFragment extends Fragment {
 
     private CategoryAdapter.OnItemClick onCategoryClick() {
         return category -> {
-            //TODO go to category
+            startActivity(new Intent(getActivity(),CategoryActivity.class).putExtra(CategoryActivity.TOOLBAR_NAME_INTENT,category.getCategoryName()));
         };
     }
 
     private PopularAdapter.OnItemClick onPopularClick() {
         return film -> {
-            //TODO go to film
+            startActivity(new Intent(getActivity(),DetailsActivity.class).putExtra(DetailsActivity.FILM_DETAILS_INTENT,film));
         };
     }
 
     private ComeSoonFilmsAdapter.OnClickItem onComingClick() {
         return film -> {
-            //TODO go to film
+            startActivity(new Intent(getActivity(),DetailsActivity.class).putExtra(DetailsActivity.FILM_DETAILS_INTENT,film));
         };
     }
 
@@ -173,7 +174,7 @@ public class HomeFragment extends Fragment {
         binding.homeContent.txtPopularMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO go to more films
+                startActivity(new Intent(getActivity(),PopularActivity.class));
             }
         });
     }

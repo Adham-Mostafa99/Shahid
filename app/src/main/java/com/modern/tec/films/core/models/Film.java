@@ -6,10 +6,11 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
-@Entity(tableName = "films_table")
-public class Film {
+public class Film implements Serializable {
 
     @SerializedName("poster_path")
     private String filmPhoto;
@@ -18,12 +19,12 @@ public class Film {
     private String filmTitle;
 
     @SerializedName("genre_ids")
-    @Ignore
     private int[] filmGenreIds;
 
-    private transient  List<String> filmsGenreNames;
+    private List<String> filmsGenreNames;
 
-    @PrimaryKey
+    private boolean isFav;
+
     @SerializedName("id")
     private int filmId;
 
@@ -50,6 +51,7 @@ public class Film {
         this.filmVote = filmVote;
         this.filmReleaseDate = filmReleaseDate;
         this.filmVoteCount = filmVoteCount;
+
     }
 
     public Film(String filmPhoto, String filmTitle, int[] filmGenreIds, int filmId, String filmOverview, double filmVote, String filmReleaseDate, int filmVoteCount) {
@@ -61,6 +63,9 @@ public class Film {
         this.filmVote = filmVote;
         this.filmReleaseDate = filmReleaseDate;
         this.filmVoteCount = filmVoteCount;
+
+
+
     }
 
     public void setFilmsGenreNames(List<String> filmsGenreNames) {
@@ -108,11 +113,22 @@ public class Film {
     }
 
 
+    public boolean isFav() {
+        return isFav;
+    }
+
+    public void setFav(boolean fav) {
+        isFav = fav;
+    }
+
     @Override
     public String toString() {
         return "Film{" +
                 "filmPhoto='" + filmPhoto + '\'' +
                 ", filmTitle='" + filmTitle + '\'' +
+                ", filmGenreIds=" + Arrays.toString(filmGenreIds) +
+                ", filmsGenreNames=" + filmsGenreNames +
+                ", isFav=" + isFav +
                 ", filmId=" + filmId +
                 ", filmOverview='" + filmOverview + '\'' +
                 ", filmVote=" + filmVote +

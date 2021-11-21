@@ -1,29 +1,21 @@
-package com.modern.tec.films.presintation.ui;
+package com.modern.tec.films.presentation.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.Toast;
 
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.navigation.NavigationView;
 import com.modern.tec.films.R;
 import com.modern.tec.films.databinding.ActivityMainBinding;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {

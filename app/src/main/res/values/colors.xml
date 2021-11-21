@@ -11,8 +11,11 @@
     <color name="dark_primary_color">#040100</color>
     <color name="assent_color">#A23027</color>
     <color name="mid_white">#99FFFFFF</color>
+    <color name="details_text_color">#C7FFFFFF</color>
     <color name="nav_icon_color">#4DFFFFFF</color>
     <color name="transparent_color">#00FFFFFF</color>
     <color name="line_color">#1A707070</color>
+    <color name="h_line_color">#61707070</color>
     <color name="search_item_background_color">#612D2B2A</color>
+    <color name="details_items_background_color">#291C19</color>
 </resources>

@@ -1,7 +1,8 @@
-package com.modern.tec.films.presintation.ui;
+package com.modern.tec.films.presentation.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,9 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.modern.tec.films.core.models.Film;
 import com.modern.tec.films.databinding.FragmentSearchBinding;
-import com.modern.tec.films.presintation.adapters.FilmAdapter;
-import com.modern.tec.films.presintation.adapters.RankingFilmAdapter;
-import com.modern.tec.films.presintation.viewmodel.FilmsViewModel;
+import com.modern.tec.films.presentation.adapters.FilmAdapter;
+import com.modern.tec.films.presentation.viewmodel.FilmsViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -157,7 +157,6 @@ public class SearchFragment extends Fragment {
     }
 
     private void initRecyclers() {
-        binding.searchContent.searchRecycler.setHasFixedSize(true);
         binding.searchContent.searchRecycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         binding.searchContent.searchRecycler.setAdapter(filmAdapter);
 
@@ -179,7 +178,7 @@ public class SearchFragment extends Fragment {
 
     private FilmAdapter.OnItemClick onItemClick() {
         return film -> {
-//TODO go to film
+            startActivity(new Intent(getActivity(),DetailsActivity.class).putExtra(DetailsActivity.FILM_DETAILS_INTENT,film));
         };
     }
 

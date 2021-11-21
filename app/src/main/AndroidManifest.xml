@@ -12,14 +12,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FilmsApp">
-        <activity android:name=".presintation.ui.SplashScreenActivity">
+        <activity android:name=".presentation.ui.CategoryActivity" />
+        <activity
+            android:name=".presentation.ui.PopularActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.DetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.SplashScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presintation.ui.MainActivity" />
+        <activity android:name=".presentation.ui.MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/primary_color"
+    android:layout_marginHorizontal="7dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/item_stars_image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/test" />
+
+    <TextView
+        android:id="@+id/item_stars_name"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_stars_image"
+        android:text="Millie BobbyBrown"
+        android:textColor="@color/details_text_color"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        android:maxEms="6"
+        android:fontFamily="@font/roboto"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
