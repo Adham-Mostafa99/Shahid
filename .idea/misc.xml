@@ -10,11 +10,12 @@
         <entry key="..\:/FilmsApp/app/src/main/res/layout/fragment_home.xml" value="0.275" />
         <entry key="..\:/FilmsApp/app/src/main/res/layout/fragment_ranking.xml" value="0.275" />
         <entry key="..\:/FilmsApp/app/src/main/res/layout/fragment_search.xml" value="0.275" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/item_categories.xml" value="0.1783783783783784" />
         <entry key="..\:/FilmsApp/app/src/main/res/layout/item_details_film.xml" value="0.275" />
         <entry key="..\:/FilmsApp/app/src/main/res/layout/item_film.xml" value="0.1783783783783784" />
         <entry key="..\:/FilmsApp/app/src/main/res/layout/item_ranking_film.xml" value="0.275" />
         <entry key="..\:/FilmsApp/app/src/main/res/layout/item_stars.xml" value="0.275" />
-        <entry key="..\:/FilmsApp/app/src/main/res/layout/item_suggested.xml" value="0.1783783783783784" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/item_suggested.xml" value="0.8800000000000001" />
         <entry key="..\:/FilmsApp/app/src/main/res/layout/ranking_content.xml" value="0.275" />
         <entry key="..\:/FilmsApp/app/src/main/res/layout/ranking_filter_content.xml" value="0.275" />
         <entry key="..\:/FilmsApp/app/src/main/res/layout/search_content.xml" value="0.275" />

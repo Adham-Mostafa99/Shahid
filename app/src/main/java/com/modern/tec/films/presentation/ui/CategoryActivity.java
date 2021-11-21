@@ -2,6 +2,7 @@ package com.modern.tec.films.presentation.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -34,6 +35,8 @@ public class CategoryActivity extends AppCompatActivity {
 
     private String categoryName;
 
+    boolean isSuggestedFilmsShown;
+
     List<Film> filmList;
     int page;
 
@@ -65,20 +68,12 @@ public class CategoryActivity extends AppCompatActivity {
         binding.moviesBarName.setText(screen_name);
     }
 
-    private void getSuggestedFilms() {// run after get list of films movie
-        filmsViewModel.getSuggestedFilms(getRandomId()).observe(this, new Observer<List<Film>>() {
-            @Override
-            public void onChanged(List<Film> films) {
-                suggestedAdapter.submitList(films);
-            }
-        });
-    }
 
-    private String getRandomId() {
-        int randomFilmIndex = new Random().nextInt(filmList.size());
+    private String getRandomId(List<Film> films) {
+        int randomFilmIndex = new Random().nextInt(films.size());
 
 
-        return String.valueOf(filmList.get(randomFilmIndex).getFilmId());
+        return String.valueOf(films.get(randomFilmIndex).getFilmId());
     }
 
     private void initPage() {
@@ -99,12 +94,30 @@ public class CategoryActivity extends AppCompatActivity {
                 .observe(this, new Observer<List<Film>>() {
                     @Override
                     public void onChanged(List<Film> films) {
+                        if (films.isEmpty())//if no films then get next page
+                            filmsViewModel.getCategoryFilms(categoryName, "", "", ++page);
                         filmList.addAll(films);
                         filmAdapter.submitList(filmList);
-                        getSuggestedFilms();
+                        filmAdapter.notifyDataSetChanged();
+
+                        if (filmList.size() > 0 && !isSuggestedFilmsShown)
+                            getSuggestedFilms(films);
                     }
                 });
     }
+
+    private void getSuggestedFilms(List<Film> filmsList) {// run after get list of films movie
+        filmsViewModel.getSuggestedFilms(getRandomId(filmsList)).observe(this, new Observer<List<Film>>() {
+            @Override
+            public void onChanged(List<Film> films) {
+                Log.v("TAG", "suggest" + films.toString());
+                suggestedAdapter.submitList(films);
+                if (!films.isEmpty() && films.size() > 5)
+                    isSuggestedFilmsShown = true;
+            }
+        });
+    }
+
 
     private void initRecycler() {
         binding.moviesRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -135,7 +148,7 @@ public class CategoryActivity extends AppCompatActivity {
         return new FilmAdapter.LoadMoreData() {
             @Override
             public void onLoadMore() {
-                filmsViewModel.getCategoryFilms(categoryName, getString(R.string.most_watched_sort), "", ++page);
+                filmsViewModel.getCategoryFilms(categoryName, "", "", ++page);
             }
         };
     }

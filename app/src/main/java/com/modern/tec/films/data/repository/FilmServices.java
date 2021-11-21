@@ -1,6 +1,7 @@
 package com.modern.tec.films.data.repository;
 
 import android.app.Application;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -175,6 +176,10 @@ public class FilmServices implements IFilmRepo {
                 .enqueue(new Callback<FilmsRespond>() {
                     @Override
                     public void onResponse(Call<FilmsRespond> call, Response<FilmsRespond> response) {
+
+                        Log.v("TAG", "url:" + response.raw().request().url());
+
+
                         if (pageNumber <= response.body().getRespondTotalPageNumber()) {
                             List<Film> filmList = response.body().getResult();
                             List<Film> categoryFilmList = new ArrayList<>();
@@ -190,11 +195,7 @@ public class FilmServices implements IFilmRepo {
                                 if (film.getFilmsGenreNames().contains(categoryName)) {
                                     categoryFilmList.add(film);
                                 }
-
-                                Log.v("TAG", "current:" + categoryFilmList);
-
                             }
-
 
                             categoryLiveData.setValue(categoryFilmList);
                         }
