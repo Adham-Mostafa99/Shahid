@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.modern.tec.films.R;
 import com.modern.tec.films.core.models.Actor;
 import com.modern.tec.films.core.models.Film;
+import com.modern.tec.films.data.network.Network;
 import com.modern.tec.films.databinding.ActivityDetailsBinding;
 import com.modern.tec.films.presentation.adapters.ActorAdapter;
 import com.modern.tec.films.presentation.adapters.DetailsAdapter;
@@ -32,6 +34,8 @@ public class DetailsActivity extends AppCompatActivity {
     private ArrayList<String> categoriesList;
     private FilmsViewModel filmsViewModel;
 
+    private boolean isFav;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,16 +47,69 @@ public class DetailsActivity extends AppCompatActivity {
         init();
         initAdapter();
         initRecycler();
+
+        checkNetworkListener();
+
+        getIsFilmFav();
+
+
         onBackButton();
         onFavButton();
 
     }
 
-    private void onFavButton() {
-        binding.detailsFav.setOnClickListener(v -> {
-            //TODO make film fav
+    private void checkNetworkListener() {
+        Network network=new Network(getApplication());
+        network.getIsNetworkAvailable().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean)
+                    binding.activityNetworkText.setVisibility(View.GONE);
+                else
+                    binding.activityNetworkText.setVisibility(View.VISIBLE);
+            }
         });
     }
+
+    private void getIsFilmFav() {
+        filmsViewModel.isFilmExistInTable(currentFilm.getFilmId()).observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    isFav = true;
+                    binding.detailsFav.setImageResource(R.drawable.favourite_button_clicked);
+                } else {
+                    isFav = false;
+                    binding.detailsFav.setImageResource(R.drawable.favourite_button);
+
+                }
+            }
+        });
+    }
+
+    private void onFavButton() {
+        binding.detailsFav.setOnClickListener(v -> {
+            if (isFav) {
+                filmsViewModel.deleteFilmFromTable(currentFilm).observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean aBoolean) {
+                        binding.detailsFav.setImageResource(R.drawable.favourite_button);
+                        isFav = false;
+                    }
+                });
+            } else {
+                filmsViewModel.insertFilmToTable(currentFilm).observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean aBoolean) {
+                        binding.detailsFav.setImageResource(R.drawable.favourite_button_clicked);
+                        isFav = true;
+                    }
+                });
+            }
+
+        });
+    }
+
 
     private void initViewModels() {
         filmsViewModel = new ViewModelProvider(this).get(FilmsViewModel.class);
@@ -114,11 +171,6 @@ public class DetailsActivity extends AppCompatActivity {
                 actorAdapter.submitList(actors);
             }
         });
-
-        if(currentFilm.isFav())//TODO make it livedata
-            binding.detailsFav.setImageResource(R.drawable.favourite_button_clicked);
-        else
-            binding.detailsFav.setImageResource(R.drawable.favourite_button);
 
 
     }

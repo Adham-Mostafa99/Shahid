@@ -8,11 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.modern.tec.films.R;
 import com.modern.tec.films.core.models.Film;
+import com.modern.tec.films.data.network.Network;
 import com.modern.tec.films.databinding.ActivityMoviesBinding;
 import com.modern.tec.films.presentation.adapters.FilmAdapter;
 import com.modern.tec.films.presentation.adapters.SuggestedAdapter;
@@ -32,6 +36,7 @@ public class PopularActivity extends AppCompatActivity {
     List<Film> filmList;
     int page;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +47,74 @@ public class PopularActivity extends AppCompatActivity {
         initViewModel();
         initAdapters();
         initRecycler();
+        initPage();
+
+        checkNetworkListener();
 
         onBackButton();
+        onSearchClick();
 
-        initPage();
+        onGetSearchFilms();
 
         getPopularFilms();
 
+
+    }
+
+    private void onGetSearchFilms() {
+        filmsViewModel.getSearchedFilmsLiveData().observe(this, new Observer<List<Film>>() {
+            @Override
+            public void onChanged(List<Film> films) {
+                filmAdapter.notifyDataSetChanged();
+                filmList.addAll(films);
+                filmAdapter.submitList(filmList);
+                getSuggestedFilms();
+
+            }
+        });
+    }
+
+
+    private void resetPage() {
+        page = 1;
+    }
+
+    private void onSearchClick() {
+
+        binding.filmDateEdittext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                resetPage();
+                if (!s.toString().isEmpty()) {
+                    resetAdapter();
+                    searchFilm(s.toString());
+                } else {
+                    resetAdapter();
+                    filmsViewModel.getPopularFilms(page);
+                }
+
+            }
+        });
+
+    }
+
+    private void searchFilm(String filmName) {
+        filmsViewModel.searchFilms(filmName, null, page);
+    }
+
+    private void resetAdapter() {
+        filmList.clear();
+        filmAdapter.submitList(filmList);
 
     }
 
@@ -84,13 +150,40 @@ public class PopularActivity extends AppCompatActivity {
         });
     }
 
+    private void checkNetworkListener() {
+        Network network = new Network(getApplication());
+        network.getIsNetworkAvailable().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean)
+                    binding.activityNetworkText.setVisibility(View.GONE);
+                else
+                    binding.activityNetworkText.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
     private void getPopularFilms() {
         filmsViewModel.getPopularFilms(page).observe(this, new Observer<List<Film>>() {
             @Override
             public void onChanged(List<Film> films) {
-                filmList.addAll(films);
-                filmAdapter.submitList(filmList);
-                getSuggestedFilms();
+                if (films != null) {
+                    filmAdapter.notifyDataSetChanged();
+                    filmList.addAll(films);
+                    filmAdapter.submitList(filmList);
+
+                    if (filmList.isEmpty())
+                        binding.txtNoMovie.setVisibility(View.VISIBLE);
+                    else
+                        binding.txtNoMovie.setVisibility(View.GONE);
+
+                    getSuggestedFilms();
+                }
+                else {
+                    binding.txtNoMovie.setVisibility(View.VISIBLE);
+                    Toast.makeText(getApplicationContext(), "Check your connection, and try again.", Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
     }
@@ -114,6 +207,8 @@ public class PopularActivity extends AppCompatActivity {
 
         suggestedAdapter = new SuggestedAdapter();
         suggestedAdapter.setOnItemClick(onSuggestItemClick());
+
+
     }
 
 

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_color">
-
+    android:background="@color/primary_color"
+    android:clipToPadding="false"
+    android:paddingBottom="75dp">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/search_app_bar"
+        android:id="@+id/fav_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -21,7 +23,7 @@
             android:minHeight="?attr/actionBarSize">
 
             <Button
-                android:id="@+id/search_back_button"
+                android:id="@+id/fav_back_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/back_button" />
@@ -52,13 +54,13 @@
         android:visibility="gone"
         android:textSize="16sp" />
 
-    <include
-        layout="@layout/search_content"
-        android:id="@+id/search_content"
-        android:layout_marginTop="12dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fav_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/search_app_bar" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/fav_app_bar"
+        android:layout_centerInParent="true"
+        tools:listitem="@layout/item_fav_film" />
 
 
 </RelativeLayout>

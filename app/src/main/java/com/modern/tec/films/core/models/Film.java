@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+@Entity(tableName = "Favorite Films")
 public class Film implements Serializable {
 
     @SerializedName("poster_path")
@@ -23,9 +24,9 @@ public class Film implements Serializable {
 
     private List<String> filmsGenreNames;
 
-    private boolean isFav;
 
     @SerializedName("id")
+    @PrimaryKey
     private int filmId;
 
     @SerializedName("overview")
@@ -44,6 +45,7 @@ public class Film implements Serializable {
         this.filmId = filmId;
     }
 
+    @Ignore
     public Film(String filmPhoto, String filmTitle, String filmOverview, double filmVote, String filmReleaseDate, int filmVoteCount) {
         this.filmPhoto = filmPhoto;
         this.filmTitle = filmTitle;
@@ -113,14 +115,6 @@ public class Film implements Serializable {
     }
 
 
-    public boolean isFav() {
-        return isFav;
-    }
-
-    public void setFav(boolean fav) {
-        isFav = fav;
-    }
-
     @Override
     public String toString() {
         return "Film{" +
@@ -128,7 +122,6 @@ public class Film implements Serializable {
                 ", filmTitle='" + filmTitle + '\'' +
                 ", filmGenreIds=" + Arrays.toString(filmGenreIds) +
                 ", filmsGenreNames=" + filmsGenreNames +
-                ", isFav=" + isFav +
                 ", filmId=" + filmId +
                 ", filmOverview='" + filmOverview + '\'' +
                 ", filmVote=" + filmVote +

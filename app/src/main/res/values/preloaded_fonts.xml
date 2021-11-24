@@ -2,7 +2,11 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/</item>
+        <item>@font/abril_fatface</item>
         <item>@font/acme</item>
+        <item>@font/aldrich</item>
+        <item>@font/almendra</item>
+        <item>@font/amarante</item>
         <item>@font/basic</item>
         <item>@font/lato_bold</item>
         <item>@font/roboto</item>

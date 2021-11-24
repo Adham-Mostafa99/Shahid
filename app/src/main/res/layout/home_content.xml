@@ -94,6 +94,19 @@
             android:textColor="@color/white"
             android:textSize="14sp" />
 
+        <TextView
+            android:id="@+id/popular_txt_no_movie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/txt_popular"
+            android:layout_marginTop="20dp"
+            android:text="No movies to show."
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_popular"
             android:layout_width="match_parent"
@@ -119,6 +132,19 @@
             android:text="Coming Soon"
             android:textColor="@color/white"
             android:textSize="@dimen/header_text_size" />
+
+        <TextView
+            android:id="@+id/coming_txt_no_movie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/txt_coming_soon"
+            android:layout_marginTop="20dp"
+            android:text="No movies to show."
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_coming_soon"

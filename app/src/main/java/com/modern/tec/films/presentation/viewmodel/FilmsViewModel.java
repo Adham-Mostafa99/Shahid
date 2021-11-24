@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
 
 import com.modern.tec.films.core.models.Actor;
 import com.modern.tec.films.core.models.Film;
@@ -26,29 +27,10 @@ public class FilmsViewModel extends AndroidViewModel {
         return allFilms;
     }
 
-    public void searchFilms(String name, int page) {
-        filmServices.searchFilms(name, page);
+    public void searchFilms(String name, String categoryName, int page) {
+        filmServices.searchFilms(name, categoryName, page);
     }
 
-//    public void insert(Film film) {
-//        filmServices.insert(film);
-//    }
-//
-//    public void insertAllFilms(List<Film> films) {
-//        filmServices.insertAllFilms(films);
-//    }
-//
-//    public void update(Film film) {
-//        filmServices.update(film);
-//    }
-//
-//    public void delete(Film film) {
-//        filmServices.delete(film);
-//    }
-//
-//    public void deleteAllFilms() {
-//        filmServices.deleteAll();
-//    }
 
     public LiveData<List<Film>> getPopularFilms(int pageNumber) {
         return filmServices.getPopularFilms(pageNumber);
@@ -86,6 +68,33 @@ public class FilmsViewModel extends AndroidViewModel {
 
     public LiveData<List<Film>> getSuggestedFilms(String filmId) {
         return filmServices.getSuggestedFilms(filmId);
+    }
+
+
+    // Room
+
+    public LiveData<Boolean> insertFilmToTable(Film film) {
+        return filmServices.insertFilmToFavoriteTable(film);
+    }
+
+    public LiveData<Boolean> insertListFilmsToTable(List<Film> filmList) {
+        return filmServices.insertListFilmsToFavoriteTable(filmList);
+    }
+
+    public LiveData<Boolean> deleteFilmFromTable(Film film) {
+        return filmServices.deleteFilmFromTable(film);
+    }
+
+    public LiveData<Boolean> deleteAllFilmFromTable() {
+        return filmServices.deleteAllFilms();
+    }
+
+    public LiveData<List<Film>> getAllFilmsFromTable() {
+        return filmServices.getAllFilmsFromTable();
+    }
+
+    public LiveData<Boolean> isFilmExistInTable(int filmId) {
+        return filmServices.isFilmExistInTable(filmId);
     }
 
 }

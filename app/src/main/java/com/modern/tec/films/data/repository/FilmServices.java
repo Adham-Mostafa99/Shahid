@@ -1,7 +1,6 @@
 package com.modern.tec.films.data.repository;
 
 import android.app.Application;
-import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -10,8 +9,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.modern.tec.films.core.models.Actor;
 import com.modern.tec.films.core.models.ActorsRespond;
+import com.modern.tec.films.data.database.FavoriteFilmDatabaseInstance;
+import com.modern.tec.films.data.database.interfaces.FavoriteFilmDao;
 import com.modern.tec.films.data.network.interfaces.FilmApi;
-import com.modern.tec.films.data.database.interfaces.FilmDao;
 import com.modern.tec.films.data.network.RetrofitInstance;
 import com.modern.tec.films.core.models.Film;
 import com.modern.tec.films.core.models.FilmsRespond;
@@ -32,11 +32,14 @@ public class FilmServices implements IFilmRepo {
     private FilmApi filmApi;
     private GenreServices genreServices;
 
-    private MutableLiveData<List<Film>> discoveredFilmsLiveData;
-    private MutableLiveData<List<Film>> PopularFilmsLiveData;
-    private MutableLiveData<List<Film>> searchedLiveData;
-    private MutableLiveData<List<Film>> suggestedLiveData;
-    private MutableLiveData<List<Film>> categoryLiveData;
+
+    private FavoriteFilmDao filmDao;
+
+    private final MutableLiveData<List<Film>> discoveredFilmsLiveData;
+    private final MutableLiveData<List<Film>> PopularFilmsLiveData;
+    private final MutableLiveData<List<Film>> searchedLiveData;
+    private final MutableLiveData<List<Film>> suggestedLiveData;
+    private final MutableLiveData<List<Film>> categoryLiveData;
 
 
     public FilmServices(Application application) {
@@ -52,9 +55,13 @@ public class FilmServices implements IFilmRepo {
         PopularFilmsLiveData = new MutableLiveData<>();
         suggestedLiveData = new MutableLiveData<>();
         categoryLiveData = new MutableLiveData<>();
+
     }
 
     private void initRoom(Application application) {
+
+        FavoriteFilmDatabaseInstance favoriteFilmDatabaseInstance = FavoriteFilmDatabaseInstance.getInstance(application);
+        this.filmDao = favoriteFilmDatabaseInstance.filmDao();
 
     }
 
@@ -66,7 +73,7 @@ public class FilmServices implements IFilmRepo {
         filmApi.getPopularFilms(KEY, pageNumber).enqueue(new Callback<FilmsRespond>() {
             @Override
             public void onResponse(Call<FilmsRespond> call, Response<FilmsRespond> response) {
-                if (pageNumber <= response.body().getRespondTotalPageNumber()) {
+                if (response.isSuccessful()) {
 
                     List<Film> filmList = response.body().getResult();
                     Map<Integer, String> genresMap = genreServices.getGenreFromInternalMemory();
@@ -86,6 +93,8 @@ public class FilmServices implements IFilmRepo {
 
             @Override
             public void onFailure(Call<FilmsRespond> call, Throwable t) {
+
+                PopularFilmsLiveData.setValue(null);
 
             }
         });
@@ -120,7 +129,7 @@ public class FilmServices implements IFilmRepo {
 
             @Override
             public void onFailure(Call<FilmsRespond> call, Throwable t) {
-
+                films.setValue(null);
             }
         });
         return films;
@@ -140,7 +149,9 @@ public class FilmServices implements IFilmRepo {
                 .enqueue(new Callback<FilmsRespond>() {
                     @Override
                     public void onResponse(Call<FilmsRespond> call, Response<FilmsRespond> response) {
-                        if (pageNumber <= response.body().getRespondTotalPageNumber()) {
+                        if (response.isSuccessful()) {
+                            Log.v("TAG", "url:" + response.raw().request().url());
+
                             List<Film> filmList = response.body().getResult();
                             Map<Integer, String> genresMap = genreServices.getGenreFromInternalMemory();
 
@@ -160,7 +171,7 @@ public class FilmServices implements IFilmRepo {
 
                     @Override
                     public void onFailure(Call<FilmsRespond> call, Throwable t) {
-
+                        discoveredFilmsLiveData.setValue(null);
                     }
                 });
     }
@@ -177,10 +188,7 @@ public class FilmServices implements IFilmRepo {
                     @Override
                     public void onResponse(Call<FilmsRespond> call, Response<FilmsRespond> response) {
 
-                        Log.v("TAG", "url:" + response.raw().request().url());
-
-
-                        if (pageNumber <= response.body().getRespondTotalPageNumber()) {
+                        if (response.isSuccessful()) {
                             List<Film> filmList = response.body().getResult();
                             List<Film> categoryFilmList = new ArrayList<>();
                             Map<Integer, String> genresMap = genreServices.getGenreFromInternalMemory();
@@ -204,7 +212,7 @@ public class FilmServices implements IFilmRepo {
 
                     @Override
                     public void onFailure(Call<FilmsRespond> call, Throwable t) {
-
+                        categoryLiveData.setValue(null);
                     }
                 });
         return categoryLiveData;
@@ -219,13 +227,14 @@ public class FilmServices implements IFilmRepo {
     }
 
     @Override
-    public void searchFilms(String name, int page) {
+    public void searchFilms(String name, String categoryFilms, int page) {
         FilmApi filmApi = RetrofitInstance.getInstance(BASE_URL).create(FilmApi.class);
         filmApi.searchFilm(KEY, name, page).enqueue(new Callback<FilmsRespond>() {
             @Override
             public void onResponse(Call<FilmsRespond> call, Response<FilmsRespond> response) {
-                if (page <= response.body().getRespondTotalPageNumber()) {
+                if (response.isSuccessful()) {
                     List<Film> filmList = response.body().getResult();
+                    List<Film> categoryFilmList = new ArrayList<>();
                     Map<Integer, String> genresMap = genreServices.getGenreFromInternalMemory();
 
                     for (Film film : filmList) {
@@ -235,9 +244,18 @@ public class FilmServices implements IFilmRepo {
                         }
 
                         film.setFilmsGenreNames(genreNames);
+
+                        if (categoryFilms != null)
+                            if (film.getFilmsGenreNames().contains(categoryFilms)) {
+                                categoryFilmList.add(film);
+                            }
+
                     }
 
-                    searchedLiveData.setValue(filmList);
+                    if (categoryFilms != null)
+                        searchedLiveData.setValue(categoryFilmList);
+                    else
+                        searchedLiveData.setValue(filmList);
                 }
 
             }
@@ -245,7 +263,7 @@ public class FilmServices implements IFilmRepo {
 
             @Override
             public void onFailure(Call<FilmsRespond> call, Throwable t) {
-
+                searchedLiveData.setValue(null);
             }
         });
 
@@ -264,7 +282,7 @@ public class FilmServices implements IFilmRepo {
 
             @Override
             public void onFailure(Call<ActorsRespond> call, Throwable t) {
-
+//TODO handle no actors
             }
         });
         return actorsLiveData;
@@ -301,106 +319,161 @@ public class FilmServices implements IFilmRepo {
         return suggestedLiveData;
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////
+    /*Room*/
+    //////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public LiveData<Boolean> insertFilmToFavoriteTable(Film film) {
+        MutableLiveData<Boolean> insertFilmToFavoriteTable = new MutableLiveData<>();
+        new InsertFilm(filmDao, insertFilmToFavoriteTable).execute(film);
+        return insertFilmToFavoriteTable;
+    }
 
-    //***********************************************
+    @Override
+    public LiveData<Boolean> insertListFilmsToFavoriteTable(List<Film> filmList) {
+
+        MutableLiveData<Boolean> insertListFilmsToFavoriteTable = new MutableLiveData<>();
+        new InsertListFilms(filmDao, insertListFilmsToFavoriteTable).execute(filmList);
+        return insertListFilmsToFavoriteTable;
+    }
+
+    @Override
+    public LiveData<Boolean> deleteFilmFromTable(Film film) {
+        MutableLiveData<Boolean> deleteFilmFromTable = new MutableLiveData<>();
+        new DeleteFilm(filmDao, deleteFilmFromTable).execute(film);
+        return deleteFilmFromTable;
+    }
+
+    @Override
+    public LiveData<Boolean> deleteAllFilms() {
+        MutableLiveData<Boolean> deleteAllFilms = new MutableLiveData<>();
+        new DeleteAllFilm(filmDao, deleteAllFilms).execute();
+        return deleteAllFilms;
+    }
+
+    @Override
+    public LiveData<List<Film>> getAllFilmsFromTable() {
+        return filmDao.getAllFilms();
+    }
+
+    @Override
+    public LiveData<Boolean> isFilmExistInTable(int filmId) {
+        MutableLiveData<Boolean> isFilmExistInTable = new MutableLiveData<>();
+        new CheckIsFilmExistInTable(filmDao, isFilmExistInTable).execute(filmId);
+        return isFilmExistInTable;
+    }
+
+    private class InsertFilm extends AsyncTask<Film, Void, Boolean> {
+        FavoriteFilmDao filmDao;
+        MutableLiveData<Boolean> insertFilmToFavoriteTable;
+
+        public InsertFilm(FavoriteFilmDao filmDao, MutableLiveData<Boolean> insertFilmToFavoriteTable) {
+            this.filmDao = filmDao;
+            this.insertFilmToFavoriteTable = insertFilmToFavoriteTable;
+        }
+
+        @Override
+        protected Boolean doInBackground(Film... films) {
+            filmDao.insert(films[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            insertFilmToFavoriteTable.setValue(aBoolean);
+        }
+    }
 
 
-//    public void insertAllFilms(List<Film> films) {
-//        new InsertAllFilmsAsyncTask(filmDao).execute(films);
-//    }
-//
-//    public void insert(Film film) {
-//        new InsertFilmAsyncTask(filmDao).execute(film);
-//    }
-//
-//    public void update(Film film) {
-//        new UpdateFilmAsyncTask(filmDao).execute(film);
-//    }
-//
-//    public void delete(Film film) {
-//        new DeleteFilmAsyncTask(filmDao).execute(film);
-//    }
-//
-//    public void deleteAll() {
-//        new DeleteAllFilmsAsyncTask(filmDao).execute();
-//    }
-//
-//
-//    private static class InsertAllFilmsAsyncTask extends AsyncTask<List<Film>, Void, Void> {
-//
-//        FilmDao filmDao;
-//
-//        public InsertAllFilmsAsyncTask(FilmDao filmDao) {
-//            this.filmDao = filmDao;
-//        }
-//
-//        @SafeVarargs
-//        @Override
-//        protected final Void doInBackground(List<Film>... lists) {
-//            filmDao.insertAll(lists[0]);
-//            return null;
-//        }
-//    }
-//
-//    private static class InsertFilmAsyncTask extends AsyncTask<Film, Void, Void> {
-//
-//        FilmDao filmDao;
-//
-//        public InsertFilmAsyncTask(FilmDao filmDao) {
-//            this.filmDao = filmDao;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Film... films) {
-//            filmDao.insert(films[0]);
-//            return null;
-//        }
-//    }
-//
-//    private static class UpdateFilmAsyncTask extends AsyncTask<Film, Void, Void> {
-//
-//        FilmDao filmDao;
-//
-//        public UpdateFilmAsyncTask(FilmDao filmDao) {
-//            this.filmDao = filmDao;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Film... films) {
-//            filmDao.update(films[0]);
-//            return null;
-//        }
-//    }
-//
-//    private static class DeleteFilmAsyncTask extends AsyncTask<Film, Void, Void> {
-//
-//        FilmDao filmDao;
-//
-//        public DeleteFilmAsyncTask(FilmDao filmDao) {
-//            this.filmDao = filmDao;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Film... films) {
-//            filmDao.delete(films[0]);
-//            return null;
-//        }
-//    }
-//
-//    private static class DeleteAllFilmsAsyncTask extends AsyncTask<Void, Void, Void> {
-//
-//        FilmDao filmDao;
-//
-//        public DeleteAllFilmsAsyncTask(FilmDao filmDao) {
-//            this.filmDao = filmDao;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//            filmDao.deleteAllFilms();
-//            return null;
-//        }
-//    }
+    private class InsertListFilms extends AsyncTask<List<Film>, Void, Boolean> {
+        FavoriteFilmDao filmDao;
+        MutableLiveData<Boolean> insertListFilmsToFavoriteTable;
 
+        public InsertListFilms(FavoriteFilmDao filmDao, MutableLiveData<Boolean> insertListFilmsToFavoriteTable) {
+            this.filmDao = filmDao;
+            this.insertListFilmsToFavoriteTable = insertListFilmsToFavoriteTable;
+        }
+
+
+        @Override
+        protected Boolean doInBackground(List<Film>... lists) {
+            filmDao.insertAll(lists[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            insertListFilmsToFavoriteTable.setValue(aBoolean);
+        }
+    }
+
+    private class DeleteFilm extends AsyncTask<Film, Void, Boolean> {
+        FavoriteFilmDao filmDao;
+        MutableLiveData<Boolean> deleteFilmFromTable;
+
+        public DeleteFilm(FavoriteFilmDao filmDao, MutableLiveData<Boolean> deleteFilmFromTable) {
+            this.filmDao = filmDao;
+            this.deleteFilmFromTable = deleteFilmFromTable;
+        }
+
+        @Override
+        protected Boolean doInBackground(Film... films) {
+            filmDao.delete(films[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            deleteFilmFromTable.setValue(aBoolean);
+        }
+    }
+
+    private class DeleteAllFilm extends AsyncTask<Void, Void, Boolean> {
+        FavoriteFilmDao filmDao;
+        MutableLiveData<Boolean> deleteAllFilms;
+
+        public DeleteAllFilm(FavoriteFilmDao filmDao, MutableLiveData<Boolean> deleteAllFilms) {
+            this.filmDao = filmDao;
+            this.deleteAllFilms = deleteAllFilms;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            filmDao.deleteAllFilms();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            deleteAllFilms.setValue(aBoolean);
+        }
+    }
+
+
+    private class CheckIsFilmExistInTable extends AsyncTask<Integer, Void, Boolean> {
+        FavoriteFilmDao filmDao;
+        MutableLiveData<Boolean> isFilmExistInTable;
+
+        public CheckIsFilmExistInTable(FavoriteFilmDao filmDao, MutableLiveData<Boolean> isFilmExistInTable) {
+            this.filmDao = filmDao;
+            this.isFilmExistInTable = isFilmExistInTable;
+        }
+
+        @Override
+        protected Boolean doInBackground(Integer... integers) {
+            return filmDao.isFilmExistInTable(integers[0]);
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            isFilmExistInTable.setValue(aBoolean);
+        }
+    }
 
 }

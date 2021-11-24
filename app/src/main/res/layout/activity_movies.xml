@@ -8,11 +8,24 @@
     android:clipToPadding="false"
     android:paddingBottom="8dp">
 
+    <TextView
+        android:id="@+id/activity_network_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/assent_color"
+        android:fontFamily="@font/roboto"
+        android:padding="4dp"
+        android:text="No Internet, you are offline"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/movies_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/activity_network_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
         android:background="@color/primary_color">
@@ -44,13 +57,14 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
+
     <LinearLayout
-        android:layout_marginTop="15dp"
         android:id="@+id/linear_1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/search_layout_high"
         android:layout_below="@id/movies_app_bar"
         android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/search_layout_background"
         android:orientation="horizontal"
         android:paddingHorizontal="16dp">
@@ -82,11 +96,22 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movies_recycler"
         android:layout_width="match_parent"
-        android:layout_marginTop="24dp"
         android:layout_height="match_parent"
         android:layout_above="@id/text_suggested"
         android:layout_below="@id/linear_1"
+        android:layout_marginTop="24dp"
         tools:listitem="@layout/item_film" />
+
+    <TextView
+        android:id="@+id/txt_no_movie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No movies to show."
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/text_suggested"

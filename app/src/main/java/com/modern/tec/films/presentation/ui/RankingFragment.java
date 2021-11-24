@@ -65,10 +65,20 @@ public class RankingFragment extends Fragment {
         onClickFilterCloseBtn();
         onClickApplyFilterBtn();
         onBackClick();
+        onCLickSearch();
 
         filmsViewModel.getDiscoveredFilms(sortType, yearSort, pageNumber);
 
         return binding.getRoot();
+    }
+
+    private void onCLickSearch() {
+        binding.rankingContent.linear1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.setNavWithCustomFragment(new SearchFragment());
+            }
+        });
     }
 
     @Override
@@ -92,9 +102,21 @@ public class RankingFragment extends Fragment {
         filmsViewModel.getDiscoveredFilmsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Film>>() {
             @Override
             public void onChanged(List<Film> films) {
-                rankingFilmAdapter.notifyDataSetChanged();
-                filmList.addAll(films);
-                rankingFilmAdapter.submitList(filmList);
+                if (films != null) {
+                    rankingFilmAdapter.notifyDataSetChanged();
+                    filmList.addAll(films);
+                    rankingFilmAdapter.submitList(filmList);
+
+                    if (filmList.isEmpty())
+                        binding.txtNoMovie.setVisibility(View.VISIBLE);
+                    else
+                        binding.txtNoMovie.setVisibility(View.GONE);
+                } else {
+                    Toast.makeText(getActivity(), "Check your connection, and try again.", Toast.LENGTH_SHORT).show();
+                    if(filmList.isEmpty()){
+                        binding.txtNoMovie.setVisibility(View.VISIBLE);
+                    }
+                }
             }
         });
     }

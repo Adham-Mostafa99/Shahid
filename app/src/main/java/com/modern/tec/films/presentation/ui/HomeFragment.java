@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -87,7 +88,17 @@ public class HomeFragment extends Fragment {
         filmsViewModel.getPopularFilms(1).observe(getViewLifecycleOwner(), new Observer<List<Film>>() {
             @Override
             public void onChanged(List<Film> films) {
-                popularAdapter.submitList(films);
+                if (films != null) {
+                    popularAdapter.submitList(films);
+
+                    if (films.isEmpty())
+                        binding.homeContent.popularTxtNoMovie.setVisibility(View.VISIBLE);
+                    else
+                        binding.homeContent.popularTxtNoMovie.setVisibility(View.GONE);
+                }else {
+                    binding.homeContent.comingTxtNoMovie.setVisibility(View.VISIBLE);
+                    Toast.makeText(getActivity(), "Check your connection, and try again.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -105,7 +116,16 @@ public class HomeFragment extends Fragment {
         filmsViewModel.getComingFilms().observe(getViewLifecycleOwner(), new Observer<List<Film>>() {
             @Override
             public void onChanged(List<Film> films) {
-                comeSoonFilmsAdapter.submitList(films);
+                if (films != null) {
+                    comeSoonFilmsAdapter.submitList(films);
+                    if (films.isEmpty())
+                        binding.homeContent.comingTxtNoMovie.setVisibility(View.VISIBLE);
+                    else
+                        binding.homeContent.comingTxtNoMovie.setVisibility(View.GONE);
+                } else {
+                    binding.homeContent.comingTxtNoMovie.setVisibility(View.VISIBLE);
+                    Toast.makeText(getActivity(), "Check your connection, and try again.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -154,19 +174,19 @@ public class HomeFragment extends Fragment {
 
     private CategoryAdapter.OnItemClick onCategoryClick() {
         return category -> {
-            startActivity(new Intent(getActivity(),CategoryActivity.class).putExtra(CategoryActivity.TOOLBAR_NAME_INTENT,category.getCategoryName()));
+            startActivity(new Intent(getActivity(), CategoryActivity.class).putExtra(CategoryActivity.TOOLBAR_NAME_INTENT, category.getCategoryName()));
         };
     }
 
     private PopularAdapter.OnItemClick onPopularClick() {
         return film -> {
-            startActivity(new Intent(getActivity(),DetailsActivity.class).putExtra(DetailsActivity.FILM_DETAILS_INTENT,film));
+            startActivity(new Intent(getActivity(), DetailsActivity.class).putExtra(DetailsActivity.FILM_DETAILS_INTENT, film));
         };
     }
 
     private ComeSoonFilmsAdapter.OnClickItem onComingClick() {
         return film -> {
-            startActivity(new Intent(getActivity(),DetailsActivity.class).putExtra(DetailsActivity.FILM_DETAILS_INTENT,film));
+            startActivity(new Intent(getActivity(), DetailsActivity.class).putExtra(DetailsActivity.FILM_DETAILS_INTENT, film));
         };
     }
 
@@ -174,7 +194,7 @@ public class HomeFragment extends Fragment {
         binding.homeContent.txtPopularMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),PopularActivity.class));
+                startActivity(new Intent(getActivity(), PopularActivity.class));
             }
         });
     }

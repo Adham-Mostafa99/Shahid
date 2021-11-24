@@ -7,17 +7,31 @@
     android:background="@color/primary_color"
     tools:context=".presentation.ui.DetailsActivity">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:paddingBottom="32dp">
 
+        <TextView
+            android:id="@+id/activity_network_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/assent_color"
+            android:fontFamily="@font/roboto"
+            android:padding="4dp"
+            android:text="No Internet, you are offline"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/details_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_below="@id/activity_network_text"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="6dp"
             android:background="@color/primary_color">

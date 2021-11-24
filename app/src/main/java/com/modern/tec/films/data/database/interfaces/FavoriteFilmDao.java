@@ -13,9 +13,9 @@ import com.modern.tec.films.core.models.Film;
 import java.util.List;
 
 @Dao
-public interface FilmDao {
+public interface FavoriteFilmDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Film film);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -27,9 +27,14 @@ public interface FilmDao {
     @Delete
     void delete(Film film);
 
-    @Query("DELETE FROM films_table")
+    @Query("DELETE FROM `Favorite Films`")
     void deleteAllFilms();
 
-    @Query("SELECT * FROM films_table ORDER BY filmTitle DESC")
+    @Query("SELECT * FROM `Favorite Films` ORDER BY filmTitle DESC")
     LiveData<List<Film>> getAllFilms();
+
+    @Query("SELECT EXISTS(SELECT * FROM `Favorite Films` WHERE filmId= :filmId)")
+    boolean isFilmExistInTable(int filmId);
+
+
 }

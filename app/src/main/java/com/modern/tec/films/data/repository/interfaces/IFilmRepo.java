@@ -23,11 +23,24 @@ public interface IFilmRepo {
 
     LiveData<List<Film>> getCategoryFilms(String categoryName, String sortType, String year, int pageNumber);
 
-    void searchFilms(String name, int page);
+    void searchFilms(String name, String categoryFilms, int page);
 
 
     LiveData<List<Actor>> getFilmActors(int filmId);
 
     LiveData<List<Film>> getSuggestedFilms(String filmId);
+
+
+    LiveData<Boolean> insertFilmToFavoriteTable(Film film);
+
+    LiveData<Boolean> insertListFilmsToFavoriteTable(List<Film> filmList);
+
+    LiveData<Boolean> deleteFilmFromTable(Film film);
+
+    LiveData<Boolean> deleteAllFilms();
+
+    LiveData<List<Film>> getAllFilmsFromTable();
+
+    LiveData<Boolean> isFilmExistInTable(int filmId);
 
 }

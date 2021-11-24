@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,7 +51,7 @@ public class SearchFragment extends Fragment {
         initAdapters();
         initRecyclers();
         initViewModels();
-        initPar();
+        initPage();
         initEditText();
 
         onBackClick();
@@ -63,7 +64,7 @@ public class SearchFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void initEditText(){
+    private void initEditText() {
         binding.searchContent.filmDateEdittext.requestFocus();
         InputMethodManager im = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         im.showSoftInput(binding.searchContent.filmDateEdittext, InputMethodManager.SHOW_IMPLICIT);
@@ -89,9 +90,21 @@ public class SearchFragment extends Fragment {
         filmsViewModel.getSearchedFilmsLiveData().observe(getViewLifecycleOwner(), new Observer<List<Film>>() {
             @Override
             public void onChanged(List<Film> films) {
-                filmAdapter.notifyDataSetChanged();
-                filmList.addAll(films);
-                filmAdapter.submitList(filmList);
+                if (films != null) {
+                    filmAdapter.notifyDataSetChanged();
+                    filmList.addAll(films);
+                    filmAdapter.submitList(filmList);
+
+                    if (filmList.isEmpty())
+                        binding.txtNoMovie.setVisibility(View.VISIBLE);
+                    else
+                        binding.txtNoMovie.setVisibility(View.GONE);
+                } else {
+                    Toast.makeText(getActivity(), "Check your connection, and try again.", Toast.LENGTH_SHORT).show();
+                    if (filmList.isEmpty()) {
+                        binding.txtNoMovie.setVisibility(View.VISIBLE);
+                    }
+                }
             }
         });
     }
@@ -114,14 +127,14 @@ public class SearchFragment extends Fragment {
                 if (!s.toString().isEmpty()) {
                     resetAdapter();
                     setSearchedFilmName(s.toString());
-                    filmsViewModel.searchFilms(getSearchedFilmName(), getPage());
+                    filmsViewModel.searchFilms(getSearchedFilmName(), null, getPage());
                 }
 
             }
         });
     }
 
-    private void initPar() {
+    private void initPage() {
         setPage(1);
     }
 
@@ -172,13 +185,13 @@ public class SearchFragment extends Fragment {
     private FilmAdapter.LoadMoreData onLoadData() {
         return () -> {
             page++;
-            filmsViewModel.searchFilms(getSearchedFilmName(), getPage());
+            filmsViewModel.searchFilms(getSearchedFilmName(), null, getPage());
         };
     }
 
     private FilmAdapter.OnItemClick onItemClick() {
         return film -> {
-            startActivity(new Intent(getActivity(),DetailsActivity.class).putExtra(DetailsActivity.FILM_DETAILS_INTENT,film));
+            startActivity(new Intent(getActivity(), DetailsActivity.class).putExtra(DetailsActivity.FILM_DETAILS_INTENT, film));
         };
     }
 

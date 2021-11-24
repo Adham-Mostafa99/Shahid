@@ -2,8 +2,11 @@ package com.modern.tec.films.presentation.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.modern.tec.films.R;
 import com.modern.tec.films.core.models.Film;
+import com.modern.tec.films.data.network.Network;
 import com.modern.tec.films.databinding.ActivityMoviesBinding;
 import com.modern.tec.films.presentation.adapters.FilmAdapter;
 import com.modern.tec.films.presentation.adapters.SuggestedAdapter;
@@ -51,12 +55,100 @@ public class CategoryActivity extends AppCompatActivity {
         initViewModel();
         initAdapters();
         initRecycler();
-
-        onBackButton();
-
         initPage();
 
+        checkNetworkListener();
+
+        onBackButton();
+        onSearchClick();
+
+        onGetSearchFilms();
+
         getCategoryFilms(categoryName);
+    }
+
+    private void checkNetworkListener() {
+        Network network = new Network(getApplication());
+        network.getIsNetworkAvailable().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean)
+                    binding.activityNetworkText.setVisibility(View.GONE);
+                else
+                    binding.activityNetworkText.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+
+    private void onGetSearchFilms() {
+        filmsViewModel.getSearchedFilmsLiveData().observe(this, new Observer<List<Film>>() {
+            @Override
+            public void onChanged(List<Film> films) {
+
+                if (films != null) {
+                    filmAdapter.notifyDataSetChanged();
+                    filmList.addAll(films);
+                    filmAdapter.submitList(filmList);
+
+                    if (filmList.isEmpty())
+                        binding.txtNoMovie.setVisibility(View.VISIBLE);
+                    else
+                        binding.txtNoMovie.setVisibility(View.GONE);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Check your connection, and try again.", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
+
+    private void resetPage() {
+        page = 1;
+    }
+
+    private void onSearchClick() {
+
+        binding.filmDateEdittext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                resetPage();
+                if (!s.toString().isEmpty()) {
+                    resetAdapter();
+                    searchFilm(s.toString());
+                } else {
+                    resetAdapter();
+                    filmsViewModel.getCategoryFilms(categoryName, getString(R.string.most_watched_sort), "", page);
+                }
+
+            }
+        });
+
+    }
+
+    private void searchFilm(String filmName) {
+        filmsViewModel.searchFilms(filmName, categoryName, page);
+    }
+
+    private void resetAdapter() {
+        filmList.clear();
+        filmAdapter.submitList(filmList);
+
+    }
+
+    private void setToolbarName(int screen_name) {
+        binding.moviesBarName.setText(getString(screen_name));
     }
 
     private View getBinding() {
@@ -94,26 +186,33 @@ public class CategoryActivity extends AppCompatActivity {
                 .observe(this, new Observer<List<Film>>() {
                     @Override
                     public void onChanged(List<Film> films) {
-                        if (films.isEmpty())//if no films then get next page
-                            filmsViewModel.getCategoryFilms(categoryName, "", "", ++page);
-                        filmList.addAll(films);
-                        filmAdapter.submitList(filmList);
-                        filmAdapter.notifyDataSetChanged();
+                        if (films != null) {
+                            if (films.isEmpty())//if no films then get next page
+                                filmsViewModel.getCategoryFilms(categoryName, getString(R.string.top_rated_sort), "", ++page);
+                            filmAdapter.notifyDataSetChanged();
+                            filmList.addAll(films);
+                            filmAdapter.submitList(filmList);
 
-                        if (filmList.size() > 0 && !isSuggestedFilmsShown)
-                            getSuggestedFilms(films);
+                            if (filmList.size() > 0 && !isSuggestedFilmsShown)
+                                getSuggestedFilms();
+
+                        }
+                        else {
+                            binding.txtNoMovie.setVisibility(View.VISIBLE);
+                            Toast.makeText(getApplicationContext(), "Check your connection, and try again.", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
 
-    private void getSuggestedFilms(List<Film> filmsList) {// run after get list of films movie
-        filmsViewModel.getSuggestedFilms(getRandomId(filmsList)).observe(this, new Observer<List<Film>>() {
+    private void getSuggestedFilms() {// run after get list of films movie
+        filmsViewModel.getSuggestedFilms(getRandomId(filmList)).observe(this, new Observer<List<Film>>() {
             @Override
             public void onChanged(List<Film> films) {
-                Log.v("TAG", "suggest" + films.toString());
-                suggestedAdapter.submitList(films);
-                if (!films.isEmpty() && films.size() > 5)
+                if (!films.isEmpty() && films.size() > 5) {
                     isSuggestedFilmsShown = true;
+                    suggestedAdapter.submitList(films);
+                }
             }
         });
     }
@@ -148,7 +247,7 @@ public class CategoryActivity extends AppCompatActivity {
         return new FilmAdapter.LoadMoreData() {
             @Override
             public void onLoadMore() {
-                filmsViewModel.getCategoryFilms(categoryName, "", "", ++page);
+                filmsViewModel.getCategoryFilms(categoryName, getString(R.string.most_watched_sort), "", ++page);
             }
         };
     }

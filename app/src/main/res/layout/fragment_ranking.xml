@@ -64,6 +64,16 @@
             android:visibility="gone" />
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/txt_no_movie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No movies to show."
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:textSize="16sp" />
 
 
 

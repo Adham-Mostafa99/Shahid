@@ -2,17 +2,23 @@ package com.modern.tec.films.presentation.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.material.navigation.NavigationBarView;
 import com.modern.tec.films.R;
+import com.modern.tec.films.data.network.Network;
 import com.modern.tec.films.databinding.ActivityMainBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     private MutableLiveData<Fragment> currentFragment;
+    private boolean isWantToExit;
 
     private final NavigationBarView.OnItemSelectedListener listener
             = new NavigationBarView.OnItemSelectedListener() {
@@ -59,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         initLiveData();
         initFragment();
 
+        checkNetworkListener();
+
 
         currentFragment.observe(this, new Observer<Fragment>() {
             @Override
@@ -68,6 +77,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void checkNetworkListener() {
+        Network network = new Network(getApplication());
+        network.getIsNetworkAvailable().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean)
+                    binding.mainActivityNetworkText.setVisibility(View.GONE);
+                else
+                    binding.mainActivityNetworkText.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
 
@@ -108,14 +130,31 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (currentFragment.getValue() instanceof HomeFragment)
-            finish();
-        else if (currentFragment.getValue() instanceof RankingFragment ||
+        if (currentFragment.getValue() instanceof HomeFragment) {
+            if (isWantToExit)
+                finish();
+            else {
+                showCustomToast();
+//                isWantToExit = true;
+            }
+        } else if (currentFragment.getValue() instanceof RankingFragment ||
                 currentFragment.getValue() instanceof SearchFragment ||
                 currentFragment.getValue() instanceof FavoriteFragment) {
             setNavWithCustomFragment(new HomeFragment());
         }
 
+    }
+
+    private void showCustomToast() {
+        Toast toast = Toast.makeText(this, "click another click to exit from App ! ", Toast.LENGTH_SHORT);
+        View view = toast.getView();
+        view.setBackground(ContextCompat.getDrawable(this, R.drawable.toast_background));
+//        view.setBackgroundColor(ContextCompat.getColor(this, R.color.assent_color));
+        TextView text = (TextView) view.findViewById(android.R.id.message);
+        text.setTextColor(Color.WHITE);
+        text.setPadding(16,0, 16, 0);
+
+        toast.show();
     }
 
 //    private Fragment getVisibleFragment(){
