@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (currentFragment.getValue() instanceof HomeFragment) {
             if (isWantToExit)
-                onDestroy();
+                finish();
             else {
                 showCustomToast();
                 isWantToExit = true;

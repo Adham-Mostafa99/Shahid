@@ -72,6 +72,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
+                finish();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         }, 300);
