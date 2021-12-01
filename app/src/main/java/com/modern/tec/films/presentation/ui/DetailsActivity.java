@@ -59,11 +59,11 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void checkNetworkListener() {
-        Network network=new Network(getApplication());
+        Network network = new Network(getApplication());
         network.getIsNetworkAvailable().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if(aBoolean)
+                if (aBoolean)
                     binding.activityNetworkText.setVisibility(View.GONE);
                 else
                     binding.activityNetworkText.setVisibility(View.VISIBLE);
@@ -143,7 +143,7 @@ public class DetailsActivity extends AppCompatActivity {
         categoriesList = new ArrayList<>();
 
         categoriesList.addAll(currentFilm.getFilmsGenreNames());
-        categoriesList.add("2h 3m");//TODO set time
+//        categoriesList.add("2h 3m");//TODO set time
         categoriesList.add(getFilmYear(currentFilm.getFilmReleaseDate()));
 
 
@@ -181,6 +181,6 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private String getFilmYear(String releaseDate) {
-        return releaseDate.split("-")[0];
+        return (releaseDate != null) ? releaseDate.split("-")[0] : "UnKnown";
     }
 }

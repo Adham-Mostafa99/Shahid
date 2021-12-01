@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.FilmsApp" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="shahid_theme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryVariant">@color/primary_color</item>//dark color
@@ -16,9 +16,11 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="radio_button_style" parent="Theme.FilmsApp">
+    <style name="radio_button_style" parent="shahid_theme">
         <item name="colorControlNormal">@color/mid_white</item>
         <item name="colorControlActivated">@color/assent_color</item>
 
     </style>
+
+
 </resources>

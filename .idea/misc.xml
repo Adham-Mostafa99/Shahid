@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/FilmsApp/app/src/main/res/drawable-ldpi/enable_filter_apply_btn_background.xml" value="0.18695652173913044" />
         <entry key="..\:/FilmsApp/app/src/main/res/drawable/details_item_background.xml" value="0.2911458333333333" />
+        <entry key="..\:/FilmsApp/app/src/main/res/drawable/filter_apply_btn_background.xml" value="0.18695652173913044" />
         <entry key="..\:/FilmsApp/app/src/main/res/drawable/toast_background.xml" value="0.18695652173913044" />
         <entry key="..\:/FilmsApp/app/src/main/res/layout/activity_details.xml" value="0.176" />
         <entry key="..\:/FilmsApp/app/src/main/res/layout/activity_main.xml" value="0.1783783783783784" />
@@ -24,9 +26,10 @@
         <entry key="..\:/FilmsApp/app/src/main/res/layout/item_stars.xml" value="0.275" />
         <entry key="..\:/FilmsApp/app/src/main/res/layout/item_suggested.xml" value="0.8800000000000001" />
         <entry key="..\:/FilmsApp/app/src/main/res/layout/ranking_content.xml" value="0.275" />
-        <entry key="..\:/FilmsApp/app/src/main/res/layout/ranking_filter_content.xml" value="0.275" />
+        <entry key="..\:/FilmsApp/app/src/main/res/layout/ranking_filter_content.xml" value="0.175" />
         <entry key="..\:/FilmsApp/app/src/main/res/layout/search_content.xml" value="0.275" />
         <entry key="..\:/FilmsApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.18695652173913044" />
+        <entry key="..\:/FilmsApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.18695652173913044" />
       </map>
     </option>
   </component>

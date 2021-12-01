@@ -132,10 +132,10 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (currentFragment.getValue() instanceof HomeFragment) {
             if (isWantToExit)
-                finish();
+                onDestroy();
             else {
                 showCustomToast();
-//                isWantToExit = true;
+                isWantToExit = true;
             }
         } else if (currentFragment.getValue() instanceof RankingFragment ||
                 currentFragment.getValue() instanceof SearchFragment ||
@@ -146,13 +146,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showCustomToast() {
-        Toast toast = Toast.makeText(this, "click another click to exit from App ! ", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, "click again to exit from App ! ", Toast.LENGTH_SHORT);
         View view = toast.getView();
         view.setBackground(ContextCompat.getDrawable(this, R.drawable.toast_background));
 //        view.setBackgroundColor(ContextCompat.getColor(this, R.color.assent_color));
         TextView text = (TextView) view.findViewById(android.R.id.message);
         text.setTextColor(Color.WHITE);
-        text.setPadding(16,0, 16, 0);
+        text.setPadding(16, 0, 16, 0);
 
         toast.show();
     }

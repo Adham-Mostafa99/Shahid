@@ -78,8 +78,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="32dp"
-            android:scaleType="centerInside"
-            android:scaleX="2"
+            android:scaleType="fitXY"
             android:src="@drawable/test"
             app:riv_corner_radius="10dip" />
 

@@ -17,8 +17,7 @@
             android:id="@+id/item_fav_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:scaleX="2.8"
+            android:scaleType="fitXY"
             android:src="@drawable/test" />
 
         <com.github.mmin18.widget.RealtimeBlurView

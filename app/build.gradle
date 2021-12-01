@@ -36,6 +36,10 @@ android {
         // for view binding:
         viewBinding true
     }
+
+    aaptOptions {
+        cruncherEnabled = false
+    }
 }
 
 dependencies {

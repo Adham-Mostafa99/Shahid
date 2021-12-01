@@ -11,12 +11,14 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -46,7 +48,10 @@ public class RankingFragment extends Fragment {
     private String yearSort;
     private String sortType;
 
+    private int oldCheckBoxId;
+
     private boolean isFilterShown;
+    private boolean isApplyBtnEnabled;
     private MainActivity activity;
 
     @Nullable
@@ -113,7 +118,7 @@ public class RankingFragment extends Fragment {
                         binding.txtNoMovie.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(getActivity(), "Check your connection, and try again.", Toast.LENGTH_SHORT).show();
-                    if(filmList.isEmpty()){
+                    if (filmList.isEmpty()) {
                         binding.txtNoMovie.setVisibility(View.VISIBLE);
                     }
                 }
@@ -197,10 +202,11 @@ public class RankingFragment extends Fragment {
     }
 
     private void applyFilter() {
-        clearList();
-        filmsViewModel.getDiscoveredFilms(sortType, yearSort, pageNumber);
-
-        hideFilterLayout();
+        if (isApplyBtnEnabled) {
+            clearList();
+            filmsViewModel.getDiscoveredFilms(sortType, yearSort, pageNumber);
+            hideFilterLayout();
+        }
     }
 
     private void clearList() {
@@ -211,13 +217,39 @@ public class RankingFragment extends Fragment {
     private void showFilterLayout() {
         binding.filterBackLayout.setVisibility(View.VISIBLE);
         binding.rankingFilterContent.content.setVisibility(View.VISIBLE);
-//        disableLayoutWhenShowFilter();
+        slideUp(binding.rankingFilterContent.content);
+        disableLayoutWhenShowFilter();
         isFilterShown = true;
 
         initFilterBtns();
     }
 
+    public void slideUp(View view) {
+        view.setVisibility(View.VISIBLE);
+        TranslateAnimation animate = new TranslateAnimation(
+                0,                 // fromXDelta
+                0,                 // toXDelta
+                view.getHeight(),  // fromYDelta
+                0);                // toYDelta
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+    }
+
+    // slide the view from its current position to below itself
+    public void slideDown(View view) {
+        TranslateAnimation animate = new TranslateAnimation(
+                0,                 // fromXDelta
+                0,                 // toXDelta
+                0,                 // fromYDelta
+                view.getHeight()); // toYDelta
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+    }
+
     private void initFilterBtns() {
+        disableApplyBtn();
         initRadioButton();
         binding.rankingFilterContent.filterLayoutGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -244,20 +276,40 @@ public class RankingFragment extends Fragment {
                         resetYearSort();
                         break;
                 }
+
+                if (checkedId != oldCheckBoxId)
+                    enableApplyBtn();
+                else
+                    disableApplyBtn();
             }
         });
     }
 
     private void initRadioButton() {
-        if (getYearSort().equals(getCurrentYear()))
+        if (getYearSort().equals(getCurrentYear())) {
+            oldCheckBoxId = binding.rankingFilterContent.filterLayoutThisYearBtn.getId();
             binding.rankingFilterContent.filterLayoutThisYearBtn.setChecked(true);
-        else if (sortType.equals(getString(R.string.top_rated_sort)))
+        } else if (sortType.equals(getString(R.string.top_rated_sort))) {
+            oldCheckBoxId = binding.rankingFilterContent.filterLayoutTopRatedBtn.getId();
             binding.rankingFilterContent.filterLayoutTopRatedBtn.setChecked(true);
-        else if (sortType.equals(getString(R.string.most_watched_sort)))
+        } else if (sortType.equals(getString(R.string.most_watched_sort))) {
+            oldCheckBoxId = binding.rankingFilterContent.filterLayoutMostWatchedBtn.getId();
             binding.rankingFilterContent.filterLayoutMostWatchedBtn.setChecked(true);
-        else
+        } else {
+            oldCheckBoxId = binding.rankingFilterContent.filterLayoutAllBtn.getId();
             binding.rankingFilterContent.filterLayoutAllBtn.setChecked(true);
+        }
 
+    }
+
+    private void disableApplyBtn() {
+        isApplyBtnEnabled = false;
+        binding.rankingFilterContent.filterLayoutApplyBtn.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.filter_apply_btn_background));
+    }
+
+    private void enableApplyBtn() {
+        isApplyBtnEnabled = true;
+        binding.rankingFilterContent.filterLayoutApplyBtn.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.enable_filter_apply_btn_background));
     }
 
     private void resetPageNumber() {
@@ -295,29 +347,23 @@ public class RankingFragment extends Fragment {
     }
 
     private void hideFilterLayout() {
-        binding.filterBackLayout.setVisibility(View.GONE);
-        binding.rankingFilterContent.content.setVisibility(View.GONE);
-//        enableLayoutWhenDisplayFilter();
+        binding.filterBackLayout.setVisibility(View.INVISIBLE);
+        binding.rankingFilterContent.content.setVisibility(View.INVISIBLE);
+        slideDown(binding.rankingFilterContent.content);
+        enableLayoutWhenDisplayFilter();
         isFilterShown = false;
     }
 
     private void disableLayoutWhenShowFilter() {
-        binding.allContentNotFilter.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+        binding.rankingContent.filmDateEdittext.setEnabled(false);
+        binding.rankingContent.filmDateEdittext.setClickable(false);
+        rankingFilmAdapter.setOnItemClick(null);
     }
 
     private void enableLayoutWhenDisplayFilter() {
-        binding.allContentNotFilter.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-
+        binding.rankingContent.filmDateEdittext.setEnabled(true);
+        binding.rankingContent.filmDateEdittext.setClickable(true);
+        rankingFilmAdapter.setOnItemClick(onRankingClick());
     }
 
     private RankingFilmAdapter.OnItemClick onRankingClick() {

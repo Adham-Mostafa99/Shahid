@@ -276,8 +276,11 @@ public class FilmServices implements IFilmRepo {
         filmApi.getFilmActors(filmId, KEY).enqueue(new Callback<ActorsRespond>() {
             @Override
             public void onResponse(Call<ActorsRespond> call, Response<ActorsRespond> response) {
-                List<Actor> actorList = response.body().getFilmActors();
-                actorsLiveData.setValue(actorList);
+                List<Actor> actorList = null;
+                if (response.body() != null) {
+                    actorList = response.body().getFilmActors();
+                    actorsLiveData.setValue(actorList);
+                }
             }
 
             @Override

@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:paddingBottom="60dp"
     android:id="@+id/content"
-    android:visibility="gone"
+    android:visibility="invisible"
     android:background="@drawable/filter_layout_background">
 
     <TextView
@@ -148,12 +148,12 @@
         android:layout_height="48dp"
         android:layout_below="@id/filter_layout_all_txt"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/filter_apply_btn_background"
         android:fontFamily="@font/roboto"
         android:text="Apply"
         android:textAllCaps="false"
         android:textColor="@color/mid_white"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
         android:textSize="22sp" />
 </RelativeLayout>

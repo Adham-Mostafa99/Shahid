@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.modern.tec.films.R;
 import com.modern.tec.films.core.models.Genre;
 import com.modern.tec.films.data.network.Network;
 import com.modern.tec.films.databinding.ActivitySplashScreenBinding;
@@ -28,6 +29,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.shahid_theme);
         super.onCreate(savedInstanceState);
         setContentView(getBinding());
         initViewModels();
