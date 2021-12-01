@@ -34,7 +34,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="center_vertical"
-                android:text="@string/search_screen_name"
+                android:text="@string/details_fav_name"
                 android:textColor="@color/white"
                 android:textSize="@dimen/main_header_text_size" />
 
