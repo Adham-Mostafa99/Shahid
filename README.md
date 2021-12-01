@@ -3,7 +3,7 @@
 ## Shahid
 **Overview**
 
-Shahid is an application to know the latest movies where you can always watch the latest releases in movies, in addition, you can search for any movie you want, and you can create your favorite list by adding your favorite movies, and all of that through the most powerful database -MovieDB- that collects all foreign and French movies German, Arabic and others.
+Shahid is an application to know the latest movies where you can always watch the latest releases in movies, in addition, you can search for any movie you want, and you can create your favorite list by adding your favorite movies, and all of that through the most powerful database -TMDB- that collects all foreign and French movies German, Arabic and others.
 
 **App Technologies**
  - MVVM design pattern
