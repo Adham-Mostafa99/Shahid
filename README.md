@@ -24,7 +24,7 @@ Shahid is an application to know the latest movies where you can always watch th
 
 
 **App features**
- - Use Biggest Movies Database (MoiveDB)
+ - Use Biggest Movies Database [(TMDB)](https://www.themoviedb.org/)
  - Find out about the latest movies
  - Sort movies by categories
  - Get to know the movies in your own style, whether the most watched or the most popular
